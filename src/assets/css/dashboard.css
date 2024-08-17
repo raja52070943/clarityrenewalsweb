@@ -1,0 +1,285 @@
+body {
+    font-family: Rubik,sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: f6f6f6;
+}
+
+
+
+p {
+    font-size: 1em;
+}
+
+.navbar-custom {
+    font-size: 16px !important;
+}
+
+/* Custom CSS to adjust submenu font size */
+.navbar-nav .dropdown-menu .dropdown-item {
+    font-size: 14px;
+}
+
+.navbar-nav .nav-link {
+    color: #003e74 !important;
+}
+
+.home-main-content {
+    margin-left: 0px;
+}
+
+.home-container {
+    /*margin-top: 3rem !important;*/
+}
+
+.btn-primary {
+    border-radius: 4px;
+    color: #fff;
+    background-color: #2367a4;
+    border-color: #44a2d2;
+    /* background: linear-gradient( to bottom, #93c482 0%, #649859 100% ); */
+    /* border: 1px #b0c77a solid; */
+
+    box-shadow: inset 0px 1px 2px 1px rgb(255 255 255 / 30%);
+    text-shadow: 0 2px 2px rgb(0 0 0 / 20%);
+    transition: all .2s;
+    height: 20px;
+    /*width: 45%;*/
+    font-size: 0.8rem;
+    padding-top: 0px;
+}
+
+.btn-success {
+    /*box-shadow: inset 0px 1px 2px 1px rgb(255 255 255 / 30%);
+text-shadow: 0 2px 2px rgb(0 0 0 / 20%);*/
+    border-radius: 4px;
+    height: 20px;
+    font-size: 0.8rem;
+    /*width: 45%;*/
+    padding-top: 0px;
+    /* background-color: #679c5b;
+    border-color: #679c5b;*/
+    background: linear-gradient( to bottom, #93c482 0%, #649859 100% );
+    /*border: 1px #b0c77a solid;*/
+    box-shadow: inset 0px 1px 2px 1px rgb(255 255 255 / 30%);
+    text-shadow: 0 2px 2px rgb(0 0 0 / 20%);
+    /*transition: all .2s;*/
+}
+
+.bg-success {
+    background-color: #679c5b !important;
+}
+
+.bg-primary {
+    background-color: #2367a4 !important;
+}
+
+a {
+    text-decoration: none;
+}
+
+th {
+    font-size: 13px;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.progress-height {
+    height: 5px;
+}
+
+.card {
+    border: 1px solid #8894ab;
+    border-radius: 0px;
+}
+
+.card-title {
+    margin: 0 0 7px 0;
+    color: #003e74;
+    font-size: 15px;
+}
+
+.th-action {
+    padding-left: 40px;
+}
+
+.custom-button {
+    height: 15px;
+    width: 95px;
+    font-size: 75%;
+    padding-top: 0px;
+}
+
+.modal-button {
+    height: 21px;
+    width: 156px;
+    font-size: 100%;
+    padding-top: 0px;
+}
+
+.progress-status {
+    width: 100%
+}
+
+/*.badge {
+    width: 65px;
+}*/
+
+.table {
+    color: #495057;
+}
+
+td {
+    padding: 12px;
+}
+
+/* Modal Popup */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 9999; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto; /* Center modal vertically and horizontally */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 70%; /* Limit maximum width */
+    overflow-x: auto; /* Enable horizontal scroll if needed */
+}
+
+/* Modal Content/Box for introduction */
+.modal-content-introduction {
+    background-color: #fff;
+    margin: 10% auto; 
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 70%; 
+    overflow-x: auto; 
+}
+
+#video-close {
+    margin-top: -1rem;
+ 
+}
+
+/* Table */
+.table {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+    /* Table Headers */
+    .table th {
+        font-weight: bold;
+        text-align: left;
+    }
+
+    /* Table Cells */
+    .table td {
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+/* Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .close:hover,
+    .close:focus {
+        color: #333;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+/* Content */
+.about-content {
+    /*margin-top: 20px;*/
+}
+
+    .about-content p {
+        margin-bottom: 10px;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .about-content strong {
+        display: block;
+        margin-top: 20px;
+        font-size: 14px;
+    }
+
+.modal-btns {
+    display: flex;
+    justify-content: space-between;
+}
+
+    .modal-btns .row {
+        width: 100%;
+    }
+
+    .modal-btns .col-md-6 {
+        width: 48%; /* Adjust as needed */
+    }
+
+
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.35rem 0.35rem0.35rem 0.35rem;
+    font-size: .75rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #333c4e;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #8894ab;
+    border-radius: 0px;
+}
+
+    .form-control::placeholder {
+        color: #999;
+    }
+
+
+
+
+
+.cancel-add-contact {
+    border: none;
+    background: none;
+    color: #d91919;
+}
+
+    .cancel-add-contact i.fa {
+        font-size: 20px;
+        color: red;
+    }
+
+
+#headerHome {
+    margin-right: 3rem !important;
+}
+
+.admin-title {
+    font-size: 1.42188rem;
+    font-weight: 400;
+    color: #2366a2;
+}
