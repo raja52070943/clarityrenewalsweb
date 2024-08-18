@@ -1,6 +1,7 @@
 // src/components/Layout.js
 import React, { useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';  
+import 'bootstrap-select/dist/css/bootstrap-select.min.css'; 
 import '../assets/css/app.css';
 import '../assets/css/icons.min.css';
 import '../assets/css/style.css';

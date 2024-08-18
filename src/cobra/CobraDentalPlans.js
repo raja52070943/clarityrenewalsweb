@@ -1,13 +1,13 @@
 import React from 'react';
 import CobraPlansComponent from './CobraPlansComponent';
 
-function CobraMedicalPlans({ companyId }) {
-    const fetchUrl = `http://localhost:7147/api/COBRAMedicalPlans/ByPlanId/${companyId}`;
+function CobraDentalPlans({ companyId }) {
+    const fetchUrl = `http://localhost:7147/api/COBRADentalPlans/ByPlanId/${companyId}`;
     const cobraId = companyId
-    const updateUrl = `http://localhost:7147/api/COBRAMedicalPlans`;
-    const deleteUrl = `http://localhost:7147/api/COBRAMedicalPlans`;
-    const addUrl = `http://localhost:7147/api/COBRAMedicalPlans`;
-    const planName = "Medical"
+    const updateUrl = `http://localhost:7147/api/COBRADentalPlans`;
+    const deleteUrl = `http://localhost:7147/api/COBRADentalPlans`;
+    const addUrl = `http://localhost:7147/api/COBRADentalPlans`;
+    const planName = "Dental"
 
     const formFields = [
         { name: 'carrierName', type: 'select', title: 'Carrier Name', placeholder: 'Carrier Name'  },
@@ -68,4 +68,4 @@ function CobraMedicalPlans({ companyId }) {
     );
 }
 
-export default CobraMedicalPlans;
+export default CobraDentalPlans;
