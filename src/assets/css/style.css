@@ -730,8 +730,8 @@ text-shadow: 0 2px 2px rgb(0 0 0 / 20%);*/
 .form-check-input {
     border-radius: 15px;
     margin-block-start: auto;
-    height: 20px;
-    width: 42px;
+    /* height: 20px;
+    width: 42px; */ /* commented for now due to style issues in radio buttons */
 }
 
 .form-switch .form-check-input {

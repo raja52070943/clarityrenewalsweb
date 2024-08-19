@@ -5,9 +5,9 @@ import 'bootstrap-select/dist/css/bootstrap-select.min.css';
 import '../assets/css/app.css';
 import '../assets/css/icons.min.css';
 import '../assets/css/style.css';
-import Sidebar from './Sidebar';
-import ProgressBar from './ProgressBar';
-import CompanyHeader from './CompanyHeader';
+import Sidebar from '../components/Sidebar';
+import ProgressBar from '../components/ProgressBar';
+import CompanyHeader from '../components/CompanyHeader';
 
 const DashboardLayout = ({ children }) => {
   useEffect(() => {

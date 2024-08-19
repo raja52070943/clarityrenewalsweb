@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/css/app.css';
 import '../assets/css/icons.min.css';
 import '../assets/css/dashboard.css';
-import Header from './Header';
+import Header from '../components/Header';
 
 const DashboardLayout = ({ children }) => {
   useEffect(() => {
