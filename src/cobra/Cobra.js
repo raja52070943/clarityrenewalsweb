@@ -10,6 +10,8 @@ import CobraHRAPlans from './CobraHRAPlans';
 import CobraFSAPlans from './CobraFSAPlans';
 import CobraInsurancePlans from './CobraInsurancePlans';
 import EnrollmentContacts from './EnrollmentContacts';
+import CobraOpenEnrollment from './CobraOpenEnrollment';
+import CobraEmployeeCensus from './CobraEmployeeCensus';
 
 
 
@@ -34,6 +36,8 @@ function Cobra() {
         <CobraFSAPlans cobraId={cobraId} />
         <CobraInsurancePlans cobraId={cobraId} />
         <EnrollmentContacts cobraId={cobraId}/>
+        <CobraOpenEnrollment cobraId={cobraId}/>
+        <CobraEmployeeCensus/>
 
       </CompanyLayout>
     </div>

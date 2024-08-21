@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import config from '../config';
 
-function EnrollmentContacts({ cobraId, onError = () => { }}) {
+function EnrollmentContacts({ cobraId, onError = () => { } }) {
     const fetchUrl = `${config.API_URL}/EnrollmentAndEligibilityContacts/ByPlanId/${cobraId}`;
     const updateUrl = `${config.API_URL}/EnrollmentAndEligibilityContacts`;
 
@@ -11,6 +11,8 @@ function EnrollmentContacts({ cobraId, onError = () => { }}) {
     const [error, setError] = useState(null);
 
     const [showForm, setShowForm] = useState(false);
+
+    const [editingContactId, setEditingContactId] = useState(null);
     const [contactType, setContactType] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -22,6 +24,20 @@ function EnrollmentContacts({ cobraId, onError = () => { }}) {
     useEffect(() => {
         fetchContacts();
     }, []);
+
+    const handleEditContact = (contact) =>{
+        setEditingContactId(contact.id);
+        setContactType(contact.contactDescription.includes('BR') ? 'Broker Contact' :
+                        contact.contactDescription.includes('ER') ? 'Employer Contact' :
+                        'Carrier Contact');
+        setName(contact.contactDescription.split(': ')[1]);
+        setEmail(contact.contactEmail);
+        setCarrier(contact.carrierType);
+        setBenefitType(contact.benefitType);
+        setSelectedCarrier(contact.carrierType === 'Specify Carriers' ? contact.carrierType : '');
+        setSelectedBenefitType(contact.benefitType === 'Specify Benefit Types' ? contact.benefitType : '');
+        setShowForm(true);
+    }
 
     const fetchContacts = async () => {
         try {
@@ -35,28 +51,101 @@ function EnrollmentContacts({ cobraId, onError = () => { }}) {
         }
     };
 
-    const handleAddContact = async () => {
+    const handleSaveContact = async () => {
         
         if (!name || !email || !contactType) {
             alert('Please fill in all required fields.');
             return;
         }
     
+        
         const contactDescription = `${contactType === 'Broker Contact' ? 'BR' : contactType === 'Employer Contact' ? 'ER' : 'CR'}: ${name}`;
     
+        // Construct updatedContact object
+        const updatedContact = {
+            id: editingContactId,
+            contactType: contactType,
+            contactDescription: contactDescription,
+            contactEmail: email,
+            carrierType: carrier === 'Specify Carriers' ? selectedCarrier : carrier,
+            benefitType: benefitType === 'Specify Benefit Types' ? selectedBenefitType : benefitType,
+            contactStatus: "true", // Adjust status as per your model
+            COBRAPlanId: cobraId
+        };
+
+        
+    
+        try {
+            // Call API to update contact
+            const response = await axios.put(`${updateUrl}/${editingContactId}`, updatedContact);
+    
+            // Update state on success
+            setContacts(contacts.map(contact => contact.id === editingContactId ? updatedContact : contact));
+            setShowForm(false);
+            setEditingContactId(null);
+            setContactType('');
+            setName('');
+            setEmail('');
+            setCarrier('All Carriers');
+            setBenefitType('All Benefit Types');
+            setSelectedCarrier('');
+            setSelectedBenefitType('');
+        } catch (error) {
+            // Handle error
+            setError('Error updating contact.');
+            console.error('Error updating contact:', error.response ? error.response.data : error.message);
+            onError(error);
+        }
+    };
+
+    const handleToggleChange = async (e, _id) => {
+        const { checked } = e.target;
+    
+        const updatedContact = {
+            id: _id,
+            contactStatus: checked ? 'true' : 'false',
+            COBRAPlanId: cobraId
+        };
+    
+        try {
+            // Call API to update contact status
+            await axios.put(`${updateUrl}/${_id}`, updatedContact);
+    
+            // Update state on success
+            setContacts(contacts.map(contact =>
+                contact.id === _id ? { ...contact, contactStatus: updatedContact.contactStatus } : contact
+            ));
+        } catch (error) {
+            setError('Error updating contact status.');
+            console.error('Error updating contact status:', error.response ? error.response.data : error.message);
+            onError(error);
+        }
+    };
+    
+    
+
+    const handleAddContact = async () => {
+
+        if (!name || !email || !contactType) {
+            alert('Please fill in all required fields.');
+            return;
+        }
+
+        const contactDescription = `${contactType === 'Broker Contact' ? 'BR' : contactType === 'Employer Contact' ? 'ER' : 'CR'}: ${name}`;
+
         const newContact = {
             contactDescription,
             contactEmail: email,
             carrierType: carrier === 'Specify Carriers' ? selectedCarrier : carrier,
             benefitType: benefitType === 'Specify Benefit Types' ? selectedBenefitType : benefitType,
-            contactStatus: 'true',  
-            COBRAPlanId: cobraId 
+            contactStatus: 'true',
+            COBRAPlanId: cobraId
         };
-        
+
         try {
             // Call API to add new contact
             await axios.post(updateUrl, newContact);
-    
+
             // Update state on success
             setContacts([...contacts, newContact]);
             setShowForm(false);
@@ -84,152 +173,152 @@ function EnrollmentContacts({ cobraId, onError = () => { }}) {
                     </div>
                     <div className="row shadow-none p-3 mb-5 bg-light rounded">
                         <div className="d-flex justify-content-end mb-3">
-                        {!showForm && (<button 
+                            {!showForm && (<button
                                 className="btn btn-success btn-sm mt-1 me-1"
                                 onClick={() => setShowForm(true)}
                             >
-                              Add New Contact
+                                Add New Contact
                             </button>)}
-                            
+
                         </div>
 
                         {showForm && (
-    <div className="container mb-4">
-        <form>
-            <div className='row'>
-                <div className="col-lg-4 mb-3">
-                    <label htmlFor="contactType" className="form-label">Contact Type</label>
-                    <select
-                        id="contactType"
-                        className="form-control"
-                        value={contactType}
-                        onChange={(e) => setContactType(e.target.value)}
-                    >
-                        <option value="">Select Contact Type</option>
-                        <option value="Broker Contact">Broker Contact</option>
-                        <option value="Employer Contact">Employer Contact</option>
-                        <option value="Carrier Contact">Carrier Contact</option>
-                    </select>
-                </div>
+                            <div className="container mb-4">
+                                <form>
+                                    <div className='row'>
+                                        <div className="col-lg-4 mb-3">
+                                            <label htmlFor="contactType" className="form-label">Contact Type</label>
+                                            <select
+                                                id="contactType"
+                                                className="form-control"
+                                                value={contactType}
+                                                onChange={(e) => setContactType(e.target.value)}
+                                            >
+                                                <option value="">Select Contact Type</option>
+                                                <option value="Broker Contact">Broker Contact</option>
+                                                <option value="Employer Contact">Employer Contact</option>
+                                                <option value="Carrier Contact">Carrier Contact</option>
+                                            </select>
+                                        </div>
 
-                <div className="col-lg-4 mb-3">
-                    <label htmlFor="name" className="form-label">Name</label>
-                    <input
-                        type="text"
-                        id="name"
-                        className="form-control"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                </div>
+                                        <div className="col-lg-4 mb-3">
+                                            <label htmlFor="name" className="form-label">Name</label>
+                                            <input
+                                                type="text"
+                                                id="name"
+                                                className="form-control"
+                                                value={name}
+                                                onChange={(e) => setName(e.target.value)}
+                                            />
+                                        </div>
 
-                <div className="col-lg-4 mb-3">
-                    <label htmlFor="email" className="form-label">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        className="form-control"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </div>
+                                        <div className="col-lg-4 mb-3">
+                                            <label htmlFor="email" className="form-label">Email</label>
+                                            <input
+                                                type="email"
+                                                id="email"
+                                                className="form-control"
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                            />
+                                        </div>
 
-                <div className="col-lg-4 mb-3">
-                    <label htmlFor="description" className="form-label">Description</label>
-                    <input
-                        type="text"
-                        id="description"
-                        className="form-control"
-                        value={`${contactType === 'Broker Contact' ? 'BR' : contactType === 'Employer Contact' ? 'ER' : 'CR'}: ${name}`}
-                        readOnly
-                    />
-                </div>
+                                        <div className="col-lg-4 mb-3">
+                                            <label htmlFor="description" className="form-label">Description</label>
+                                            <input
+                                                type="text"
+                                                id="description"
+                                                className="form-control"
+                                                value={`${contactType === 'Broker Contact' ? 'BR' : contactType === 'Employer Contact' ? 'ER' : 'CR'}: ${name}`}
+                                                readOnly
+                                            />
+                                        </div>
 
-                <div className="col-lg-4 mb-3">
-                    <label htmlFor="carrier" className="form-label">Carrier</label>
-                    <select
-                        id="carrier"
-                        className="form-control"
-                        value={carrier}
-                        onChange={(e) => setCarrier(e.target.value)}
-                    >
-                        <option value="All Carriers">All Carriers</option>
-                        <option value="Specify Carriers">Specify Carriers</option>
-                    </select>
+                                        <div className="col-lg-4 mb-3">
+                                            <label htmlFor="carrier" className="form-label">Carrier</label>
+                                            <select
+                                                id="carrier"
+                                                className="form-control"
+                                                value={carrier}
+                                                onChange={(e) => setCarrier(e.target.value)}
+                                            >
+                                                <option value="All Carriers">All Carriers</option>
+                                                <option value="Specify Carriers">Specify Carriers</option>
+                                            </select>
 
-                    {carrier === 'Specify Carriers' && (
-                        <div className="mt-2">
-                            <select
-                                className="form-control"
-                                value={selectedCarrier}
-                                onChange={(e) => setSelectedCarrier(e.target.value)}
-                            >
-                                <option value="">Select Carrier</option>
-                                {/* Add list of carriers here */}
-                                <option value="Carrier1">Carrier1</option>
-                                <option value="Carrier2">Carrier2</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                    )}
-                </div>
+                                            {carrier === 'Specify Carriers' && (
+                                                <div className="mt-2">
+                                                    <select
+                                                        className="form-control"
+                                                        value={selectedCarrier}
+                                                        onChange={(e) => setSelectedCarrier(e.target.value)}
+                                                    >
+                                                        <option value="">Select Carrier</option>
+                                                        {/* Add list of carriers here */}
+                                                        <option value="Carrier1">Carrier1</option>
+                                                        <option value="Carrier2">Carrier2</option>
+                                                        <option value="Other">Other</option>
+                                                    </select>
+                                                </div>
+                                            )}
+                                        </div>
 
-                <div className="col-lg-4 mb-3">
-                    <label htmlFor="benefitType" className="form-label">Benefit Types</label>
-                    <select
-                        id="benefitType"
-                        className="form-control"
-                        value={benefitType}
-                        onChange={(e) => setBenefitType(e.target.value)}
-                    >
-                        <option value="All Benefit Types">All Benefit Types</option>
-                        <option value="Specify Benefit Types">Specify Benefit Types</option>
-                    </select>
+                                        <div className="col-lg-4 mb-3">
+                                            <label htmlFor="benefitType" className="form-label">Benefit Types</label>
+                                            <select
+                                                id="benefitType"
+                                                className="form-control"
+                                                value={benefitType}
+                                                onChange={(e) => setBenefitType(e.target.value)}
+                                            >
+                                                <option value="All Benefit Types">All Benefit Types</option>
+                                                <option value="Specify Benefit Types">Specify Benefit Types</option>
+                                            </select>
 
-                    {benefitType === 'Specify Benefit Types' && (
-                        <div className="mt-2">
-                            <select
-                                className="form-control"
-                                value={selectedBenefitType}
-                                onChange={(e) => setSelectedBenefitType(e.target.value)}
-                            >
-                                <option value="">Select Benefit Type</option>
-                                <option value="Medical">Medical</option>
-                                <option value="Dental">Dental</option>
-                                <option value="Vision">Vision</option>
-                                <option value="EAP">EAP</option>
-                                <option value="HRA">HRA</option>
-                                <option value="FSA">FSA</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                    )}
-                </div>
+                                            {benefitType === 'Specify Benefit Types' && (
+                                                <div className="mt-2">
+                                                    <select
+                                                        className="form-control"
+                                                        value={selectedBenefitType}
+                                                        onChange={(e) => setSelectedBenefitType(e.target.value)}
+                                                    >
+                                                        <option value="">Select Benefit Type</option>
+                                                        <option value="Medical">Medical</option>
+                                                        <option value="Dental">Dental</option>
+                                                        <option value="Vision">Vision</option>
+                                                        <option value="EAP">EAP</option>
+                                                        <option value="HRA">HRA</option>
+                                                        <option value="FSA">FSA</option>
+                                                        <option value="Other">Other</option>
+                                                    </select>
+                                                </div>
+                                            )}
+                                        </div>
 
-                <div className="col-12 text-center mb-3">
-                    <button 
-                        type="button"
-                        className="btn btn-success btn-lg me-2"
-                        onClick={handleAddContact}
-                    >
-                        Add
-                    </button>
-                    <button 
-                        type="button"
-                        className="btn btn-primary btn-lg"
-                        onClick={() => setShowForm(false)}
-                    >
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
-)}
+                                        <div className="col-12 text-center mb-3">
+                                        <button
+                                        type="button"
+                                        className="btn btn-success btn-sm mt-1 me-1"
+                                        onClick={editingContactId ? handleSaveContact : handleAddContact}
+                                    >
+                                        {editingContactId ? 'Update Contact' : 'Add Contact'}
+                                    </button>
+                                            <button
+                                                type="button"
+                                                className="btn btn-primary btn-lg"
+                                                onClick={() => setShowForm(false)}
+                                            >
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        )}
 
 
                         <div className="container">
-                            
+
                             {contacts.length ? (
                                 <table className="table">
                                     <thead>
@@ -259,14 +348,16 @@ function EnrollmentContacts({ cobraId, onError = () => { }}) {
                                                             type="checkbox"
                                                             className="form-check-input form-check-input-toggle-active toggle-input-switch"
                                                             role="switch"
-                                                            checked={contact.contactStatus}
-                                                        />
+                                                            id={`contact_status_${contact.id}`}
+                                                            checked={contact?.contactStatus === "true"} 
+                                                            onChange={(e) => handleToggleChange(e, contact.id)}/>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="#" onClick={() => {}} title="Edit">
-                                                        <i className="fa-solid fa-pen"></i>
-                                                    </a>
+                                                    <span  onClick={() => handleEditContact(contact)} title="Edit">
+                                                    
+                                                    ✏️
+                                                    </span>
                                                 </td>
                                             </tr>
                                         ))}

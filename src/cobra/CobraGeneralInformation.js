@@ -6,6 +6,7 @@ import config from '../config';
 function CobraGeneralInformation({ cobraId, onError = () => { } }) {
     const fetchUrl = `${config.API_URL}/CobraGeneralInformations/ByPlanId/${cobraId}`;
     const updateUrl = `${config.API_URL}/CobraGeneralInformations`;
+    
     const [generalInfo, setGeneralInfo] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

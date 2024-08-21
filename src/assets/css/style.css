@@ -1372,7 +1372,7 @@ p {
 
 /*-------------------------------------------------------------------------- COBRA --------------------------------------------------------*/
 .add-coverage {
-    float: right;
+    /* float: right; */
     /* margin-top: -1.6rem !important; */
     cursor: pointer;
     background: none;
@@ -2866,7 +2866,7 @@ input[type=file] {
 }
 
 .form-check-input-toggle-active::before {
-    content: 'In Active';
+    content: 'InActive';
     position: absolute;
     top: 50%;
     left: 5px;
