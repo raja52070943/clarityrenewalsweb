@@ -10,7 +10,7 @@ function CobraEmployeeCensus() {
                                             Employee Census
                                         </h5>
                                         
-                                        
+                                        <div class="d-flex justify-content-center mb-2"><span><strong>The employee census is used by our Finance team to identify the count of benefit eligible employees that may experience a qualifying event. We collect this information on an annual basis during renewal to ensure our records are up to date.</strong></span></div>
                                         <div className="col-lg-12">
 
 

@@ -6,7 +6,6 @@ import '../assets/css/app.css';
 import '../assets/css/icons.min.css';
 import '../assets/css/style.css';
 import Sidebar from './Sidebar';
-import ProgressBar from './ProgressBar';
 import CompanyHeader from './CompanyHeader';
 
 const DashboardLayout = ({ children }) => {
@@ -29,14 +28,9 @@ const DashboardLayout = ({ children }) => {
       <div id="layout-wrapper">
         <div id="wrapper" className="toggled">
           <Sidebar />
-          <ProgressBar/>
-          <div id="page-content-wrapper">
-            <div className="container-fluid">
-              <div className="row startingrow">
+          
                 {children}
-              </div>
-            </div>
-          </div>
+              
         </div>
       </div>
     </div>
