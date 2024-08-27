@@ -12,6 +12,7 @@
     "axios": "^1.7.4",
     "bootstrap": "^5.3.3",
     "bootstrap-select": "^1.13.18",
+    "formik": "^2.4.6",
     "history": "^5.3.0",
     "jquery": "^3.7.1",
     "lodash": "^4.17.21",
@@ -23,7 +24,8 @@
     "react-router-dom": "^6.26.0",
     "react-scripts": "5.0.1",
     "rsuite": "^5.69.0",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^1.4.0"
   },
   "scripts": {
     "start": "react-scripts start",

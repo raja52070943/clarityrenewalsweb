@@ -6,9 +6,7 @@ import debounce from 'lodash/debounce';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import CobraPlanCoverageComponent from './CobraPlanCoverageComponent';
-
 import 'rsuite/SelectPicker/styles/index.css';
-import { alertconfirmation, terminationAlert } from '../alerts/Alerts';
 
 function PlansComponent({
     apiEndpoint,
@@ -26,11 +24,8 @@ function PlansComponent({
     const [plans, setPlans] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState(null);
-
     const [leftDivisions, setLeftDivisions] = useState([1, 2, 3, 4]);
     const [rightDivisions, setRightDivisions] = useState([5, 6]);
-
-
 
     React.useEffect(() => {
         fetchPlans();
@@ -100,12 +95,9 @@ function PlansComponent({
     const handleAddPlan = async () => {
         try {
             const firstPlanCarrierName = plans.length > 0 ? plans[0].carrierName : '';
-
             const newPlan = { ...initialFormValues, carrierName: firstPlanCarrierName, cobraPlanId: cobraId };
-
             console.log('Add URL:', addUrl); // Debugging URL
             console.log('New Plan Data:', newPlan); // Debugging data
-
             const response = await axios.post(addUrl, newPlan);
             setPlans([...plans, response.data]);
         } catch (error) {
@@ -113,7 +105,6 @@ function PlansComponent({
             onError(error);
         }
     };
-
 
     const moveLeftToRight = () => {
         if (leftDivisions.length > 0) {
@@ -123,7 +114,6 @@ function PlansComponent({
         }
     };
 
-
     const moveRightToLeft = () => {
         if (rightDivisions.length > 0) {
             const movingDivision = rightDivisions.shift();
@@ -131,18 +121,9 @@ function PlansComponent({
             setLeftDivisions([...leftDivisions, movingDivision]);
         }
     };
-
-
-    
-
-
-
-
     if (loading) return <Skeleton />;
     if (error) return <div>{error}</div>;
-
     // if (plans.length === 0) return <div>No plans available.</div>;
-
     return (
         <div>
             <div className="col-lg-12 mb-3">
@@ -150,7 +131,6 @@ function PlansComponent({
                     <div className="collapsible-btn plan-collapsible-btn mx-auto d-block">
                         {planName} Plan Information
                     </div>
-
                     <div className="collapsible-content mt-3">
                         <div className="container-fluid">
                             <div className="row session">
@@ -160,118 +140,89 @@ function PlansComponent({
                                             <div className="card mb-3">
                                                 <div className="card-body">
                                                     <div className="row mb-3">
-
                                                         {plan.isRenewal === "true" && (
                                                             <div>
                                                                 <div className="col-lg-12 d-flex   mb-3">
                                                                     <strong>If your carrier is changing,
                                                                         please terminate this plan and add a new
                                                                         one.</strong>
-
-
-
                                                                 </div>
                                                                 <div className="row mb-3">
                                                                     <div className="d-flex ">
                                                                         <strong>{plan.carrierName} - {plan.planName}</strong>
-
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">
                                                                     <div class="col-lg-3 ">
-
-
-
                                                                         <div class="form-check form-switch form-toggle">
                                                                             <label class="form-check-label">
                                                                                 Is this plan terminating?
                                                                             </label>
-
                                                                             <input type="checkbox" class="form-check-input form-check-input-toggel toggle-input-switch"
                                                                                 checked={plan.isTerminating === 'true'}
                                                                                 onChange={(e) => handleToggleChange(index, e, 'isTerminating')} role="switch" value="true" />
-
-
-
                                                                         </div>
-
-
-
-
                                                                     </div>
-
                                                                     {plan.isTerminating === "true" && (
                                                                         <div class="col-lg-3 mb-2 termination_date" id="termination_date">
                                                                             <div class="d-flex ">
                                                                                 <span class="input-group-text">
                                                                                     <i class="  far fa-calendar-alt"></i>
                                                                                 </span>
-
-
                                                                                 <DatePicker
                                                                                     className="form-control"
                                                                                     selected={plan.planTerminationDate || ''}
                                                                                     onChange={(date) => handleDateChange(index, 'planTerminationDate', date)}
                                                                                     placeholderText="Plan Termination Date" />
-
-
                                                                             </div>
                                                                         </div>
                                                                     )}
-
-
-
-
                                                                 </div>
                                                             </div>
-
                                                         )}
-
                                                         {plan.isTerminating !== "true" && (
                                                             <div>
                                                                 <div className='row'>
-                                                                {formFields.map((field, fieldIndex) => (
-                                                                    <div key={fieldIndex} className="col-lg-3">
-                                                                        <div className="input-group mb-2">
-                                                                            {field.type === 'select' ? (
-                                                                                <select
-                                                                                    className={`form-control selectpickers ${field.className}`}
-                                                                                    title={field.title}
-                                                                                    name={field.name}
-                                                                                    value={plan[field.name] || ''}
-                                                                                    onChange={(e) => handleInputChange(index, e)}
-                                                                                >
-                                                                                    <option disabled value="">{field.placeholder}</option>
-                                                                                    {selectOptions[field.name]?.map((option, optionIndex) => (
-                                                                                        <option key={optionIndex} value={option.value}>
-                                                                                            {option.label}
-                                                                                        </option>
-                                                                                    ))}
-                                                                                </select>
-                                                                            ) : field.type === 'date' ? (
-
-                                                                                <DatePicker
-                                                                                    className="form-control"
-                                                                                    selected={plan[field.name]}
-                                                                                    onChange={(date) => handleDateChange(index, field.name, date)}
-                                                                                    placeholderText={field.placeholder}
-                                                                                />
-                                                                            ) : (
-                                                                                <input
-                                                                                    className={`form-control ${field.className}`}
-                                                                                    title={field.title}
-                                                                                    type={field.type}
-                                                                                    name={field.name}
-                                                                                    placeholder={field.placeholder}
-                                                                                    value={plan[field.name] || ''}
-                                                                                    onChange={(e) => handleInputChange(index, e)}
-                                                                                />
-                                                                            )}
-
+                                                                    {formFields.map((field, fieldIndex) => (
+                                                                        <div key={fieldIndex} className="col-lg-3">
+                                                                            <div className="input-group mb-2">
+                                                                                {field.type === 'select' ? (
+                                                                                    <select
+                                                                                        className={`form-control selectpickers ${field.className}`}
+                                                                                        title={field.title}
+                                                                                        name={field.name}
+                                                                                        value={plan[field.name] || ''}
+                                                                                        onChange={(e) => handleInputChange(index, e)}
+                                                                                    >
+                                                                                        <option disabled value="">{field.placeholder}</option>
+                                                                                        {selectOptions[field.name]?.map((option, optionIndex) => (
+                                                                                            <option key={optionIndex} value={option.value}>
+                                                                                                {option.label}
+                                                                                            </option>
+                                                                                        ))}
+                                                                                    </select>
+                                                                                ) : field.type === 'date' ? (
+                                                                                    <DatePicker
+                                                                                        className="form-control"
+                                                                                        selected={plan[field.name]}
+                                                                                        onChange={(date) => handleDateChange(index, field.name, date)}
+                                                                                        placeholderText={field.placeholder}
+                                                                                    />
+                                                                                ) : (
+                                                                                    <input
+                                                                                        className={`form-control ${field.className}`}
+                                                                                        title={field.title}
+                                                                                        type={field.type}
+                                                                                        name={field.name}
+                                                                                        placeholder={field.placeholder}
+                                                                                        value={plan[field.name] || ''}
+                                                                                        onChange={(e) => handleInputChange(index, e)}
+                                                                                    />
+                                                                                )}
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                ))}
-</div>
+                                                                    ))}
+                                                                </div>
                                                                 <div className="col-lg-12 mb-3">
                                                                     <div className="form-check form-switch form-toggle">
                                                                         <label className="form-check-label">
@@ -297,7 +248,6 @@ function PlansComponent({
                                                                                 <p key={idx} data-index={division}>{`Division ${division}`}</p>
                                                                             ))}
                                                                         </div>
-
                                                                         <div className="arrow-container">
                                                                             <i
                                                                                 className="arrow fas fa-arrow-right right-arrow"
@@ -323,7 +273,6 @@ function PlansComponent({
 
                                                                     </div>
                                                                 </div>
-
                                                                 <div className="row mb-3">
                                                                     <div className="col-lg-12">
                                                                         <div className="form-check form-switch form-toggle">
@@ -342,7 +291,6 @@ function PlansComponent({
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
                                                                 <div className="row mb-3">
                                                                     <div className="col-lg-6">
                                                                         <div className="input-group mb-2">
@@ -384,9 +332,7 @@ function PlansComponent({
                                                                             </select>
                                                                         </div>
                                                                     </div>
-
                                                                 </div>
-
                                                                 {plan.planRateType === "Age/Gender" && (
                                                                     <div>
                                                                         <div id={`agegendertext_${index}`}>
@@ -395,23 +341,16 @@ function PlansComponent({
                                                                             </div>
                                                                         </div>
                                                                         <div className="col-lg-12">
-
-
-
-
                                                                             <div className="table-responsive">
-
                                                                                 <table className="styled-table" cellspacing="0" width="100%">
                                                                                     <thead>
                                                                                         <tr>
-
                                                                                             <th className="fileUploads-table-row">
                                                                                                 File Category
                                                                                             </th>
                                                                                             <th colspan="2" className="fileUploads-table-row">
                                                                                                 File Uploads
                                                                                             </th>
-
                                                                                         </tr>
                                                                                     </thead>
                                                                                     <tbody>
@@ -419,9 +358,6 @@ function PlansComponent({
                                                                                             <th className="vertical-th fileUploadsCobrabenefits" scope="row" >
                                                                                                 <span className=" browse-text pt-1">Age/Gender Banded Rates</span>
                                                                                             </th>
-
-
-
                                                                                             <td className="fileuploads-table-row">
                                                                                                 <div className="upload-section-funding">
                                                                                                     <div className="d-flex justify-content-around mb-1">
@@ -429,57 +365,30 @@ function PlansComponent({
                                                                                                         <label for="cobraBenefitsFile_1" className="file-input-label pt-2" id="selectedFileNameCobra_(1)_(1)">Browse
                                                                                                             files
                                                                                                             here.<br />Acceptable file formats include .pdf, .xlsx, .xls, and .csv</label>
-
-
                                                                                                         <button className="btn btn-success emp-upload-button btn-sm mt-2" onclick="uploadCobraBenefitsFile(1, 1)">Upload</button>
                                                                                                     </div>
                                                                                                 </div>
-
-
-
                                                                                             </td>
-
-
-
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <th className="vertical-th fileUploadsCobrabenefits" scope="row" >
                                                                                                 <span className=" browse-text pt-1">Summary of Benefits and Coverage (SBC) Documents</span>
                                                                                             </th>
-
-
-
                                                                                             <td className="fileuploads-table-row">
                                                                                                 <div className="upload-section-funding">
                                                                                                     <div className="d-flex justify-content-around mb-1">
                                                                                                         <input type="file" accept=".pdf, .xlsx, .xls, .csv" id="cobraBenefitsFile_1" name="myfile" />
                                                                                                         <label for="cobraBenefitsFile_1" className="file-input-label pt-2" id="selectedFileNameCobra_(1)_(1)">Browse files here.<br />Acceptable file formats include .pdf, .xlsx, .xls, and .csv</label>
-
-
                                                                                                         <button className="btn btn-success emp-upload-button btn-sm mt-2" onclick="uploadCobraBenefitsFile(1, 1)">Upload</button>
                                                                                                     </div>
                                                                                                 </div>
-
-
-
                                                                                             </td>
-
-
-
                                                                                         </tr>
-
-
-
-
-
                                                                                     </tbody>
                                                                                 </table>
-
                                                                             </div>
-
                                                                         </div>
                                                                     </div>
-
                                                                 )}
                                                                 {plan.planRateType === "Composite" && (
                                                                     <div>
@@ -506,13 +415,11 @@ function PlansComponent({
                                                                                     </span>
                                                                                 </div>
                                                                             </div>
-
                                                                             <div className="row">
                                                                                 <div className="col-lg-3"></div>
                                                                                 <div className="col-lg-3">
                                                                                     <div className="d-flex mb-2">
                                                                                         <span className="input-group-text"><i className="far fa-calendar-alt"></i></span>
-
                                                                                         <DatePicker
                                                                                             className="form-control"
                                                                                             selected={plan.currentRateStartDate || ''}
@@ -534,8 +441,6 @@ function PlansComponent({
                                                                                 <div className="col-lg-3">
                                                                                     <div className="d-flex mb-2">
                                                                                         <span className="input-group-text"><i className="far fa-calendar-alt"></i></span>
-
-
                                                                                         <DatePicker
                                                                                             className="form-control"
                                                                                             selected={plan.futureRateStartDate || ''}
@@ -544,14 +449,11 @@ function PlansComponent({
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-
                                                                             <div className="row">
                                                                                 <div className="col-lg-3">Coverage Level</div>
                                                                                 <div className="col-lg-3">
                                                                                     <div className="d-flex mb-2">
                                                                                         <span className="input-group-text"><i className="far fa-calendar-alt"></i></span>
-
-
                                                                                         <DatePicker
                                                                                             className="form-control"
                                                                                             selected={plan.currentRateEndDate || ''}
@@ -573,8 +475,6 @@ function PlansComponent({
                                                                                 <div className="col-lg-3">
                                                                                     <div className="d-flex mb-2">
                                                                                         <span className="input-group-text"><i className="far fa-calendar-alt"></i></span>
-
-
                                                                                         <DatePicker
                                                                                             className="form-control"
                                                                                             selected={plan.futureRateEndDate || ''}
@@ -583,32 +483,23 @@ function PlansComponent({
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-
                                                                             <CobraPlanCoverageComponent
                                                                                 planId={plan.id}
                                                                                 planName={planName}
                                                                                 selectOptions={selectOptions}
                                                                                 initialFormValues={{}} />
                                                                         </div>
-
                                                                         <div className="col-lg-12 mt-5">
-
-
-
-
                                                                             <div className="table-responsive">
-
                                                                                 <table className="styled-table" cellspacing="0" width="100%">
                                                                                     <thead>
                                                                                         <tr>
-
                                                                                             <th className="fileUploads-table-row">
                                                                                                 File Category
                                                                                             </th>
                                                                                             <th colspan="2" className="fileUploads-table-row">
                                                                                                 File Uploads
                                                                                             </th>
-
                                                                                         </tr>
                                                                                     </thead>
                                                                                     <tbody>
@@ -616,9 +507,6 @@ function PlansComponent({
                                                                                             <th className="vertical-th fileUploadsCobrabenefits" scope="row" >
                                                                                                 <span className=" browse-text pt-1">Age/Gender Banded Rates</span>
                                                                                             </th>
-
-
-
                                                                                             <td className="fileuploads-table-row">
                                                                                                 <div className="upload-section-funding">
                                                                                                     <div className="d-flex justify-content-around mb-1">
@@ -626,64 +514,32 @@ function PlansComponent({
                                                                                                         <label for="cobraBenefitsFile_1" className="file-input-label pt-2" id="selectedFileNameCobra_(1)_(1)">Browse
                                                                                                             files
                                                                                                             here.<br />Acceptable file formats include .pdf, .xlsx, .xls, and .csv</label>
-
-
                                                                                                         <button className="btn btn-success emp-upload-button btn-sm mt-2" >Upload</button>
                                                                                                     </div>
                                                                                                 </div>
-
-
-
                                                                                             </td>
-
-
-
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <th className="vertical-th fileUploadsCobrabenefits" scope="row" >
                                                                                                 <span className=" browse-text pt-1">Summary of Benefits and Coverage (SBC) Documents</span>
                                                                                             </th>
-
-
-
                                                                                             <td className="fileuploads-table-row">
                                                                                                 <div className="upload-section-funding">
                                                                                                     <div className="d-flex justify-content-around mb-1">
                                                                                                         <input type="file" accept=".pdf, .xlsx, .xls, .csv" id="cobraBenefitsFile_1" name="myfile" />
                                                                                                         <label for="cobraBenefitsFile_1" className="file-input-label pt-2" id="selectedFileNameCobra_(1)_(1)">Browse files here.<br />Acceptable file formats include .pdf, .xlsx, .xls, and .csv</label>
-
-
                                                                                                         <button className="btn btn-success emp-upload-button btn-sm mt-2" >Upload</button>
                                                                                                     </div>
                                                                                                 </div>
-
-
-
                                                                                             </td>
-
-
-
                                                                                         </tr>
-
-
-
-
-
                                                                                     </tbody>
                                                                                 </table>
-
                                                                             </div>
-
                                                                         </div>
-
                                                                     </div>
-
-
-
                                                                 )}
-
                                                             </div>
-
                                                         )}
                                                     </div>
                                                 </div>
