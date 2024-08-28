@@ -292,17 +292,31 @@ function EnrollmentContacts({ cobraId, onError = () => { }, onValidationStateCha
                                             <Form.Control
                                                 as="select"
                                                 value={formData.carrier}
-                                                // onChange={(e) => setFormData({ ...formData, carrier: e.target.value })}
-                                                onChange={(e) => setFormData({ ...formData, selectedCarrier: e.target.value })}
-                                            // isInvalid={!!validationErrors.selectedCarrier}
+                                                // onChange={(e) => {
+                                                //     setFormData({ ...formData, carrier: e.target.value });
+                                                //     if (e.target.value === 'Specify Carriers') {
+                                                //         // Show carrier options when 'Specify Carriers' is selected
+                                                //         setFormData({ ...formData, selectedCarrier: '' });
+                                                //     }
+                                                // }}
+                                                onChange={(e) => {
+                                                    const value = e.target.value;
+                                                    setFormData({
+                                                        ...formData,
+                                                        carrier: value,
+                                                        selectedCarrier: value === 'Specify Carriers' ? formData.selectedCarrier : ''
+                                                    });
+                                                }}
+                                                isInvalid={!!validationErrors.selectedCarrier}
                                             >
                                                 <option value="All Carriers">All Carriers</option>
                                                 <option value="Specify Carriers">Specify Carriers</option>
                                             </Form.Control>
-                                            {formData.carrier === 'Specify Carriers' && (
-                                                <><Form.Control
+                                        </Form.Group>
+                                        {formData.carrier === 'Specify Carriers' && (
+                                            <Form.Group controlId="selectedCarrier" className="mt-2">
+                                                <Form.Control
                                                     as="select"
-                                                    className="mt-2"
                                                     value={formData.selectedCarrier}
                                                     onChange={(e) => setFormData({ ...formData, selectedCarrier: e.target.value })}
                                                     isInvalid={!!validationErrors.selectedCarrier}
@@ -311,11 +325,12 @@ function EnrollmentContacts({ cobraId, onError = () => { }, onValidationStateCha
                                                     <option value="Carrier1">Carrier1</option>
                                                     <option value="Carrier2">Carrier2</option>
                                                     <option value="Other">Other</option>
-                                                </Form.Control><Form.Control.Feedback type="invalid">
-                                                        {validationErrors.selectedCarrier}
-                                                    </Form.Control.Feedback></>
-                                            )}
-                                        </Form.Group>
+                                                </Form.Control>
+                                                <Form.Control.Feedback type="invalid">
+                                                    {validationErrors.selectedCarrier}
+                                                </Form.Control.Feedback>
+                                            </Form.Group>
+                                        )}
                                     </Col>
 
                                     <Col lg={4} className="mb-3">
@@ -325,7 +340,16 @@ function EnrollmentContacts({ cobraId, onError = () => { }, onValidationStateCha
                                                 as="select"
                                                 value={formData.benefitType}
                                                 // onChange={(e) => setFormData({ ...formData, benefitType: e.target.value })}
-                                                onChange={(e) => setFormData({ ...formData, selectedBenefitType: e.target.value })}
+                                                // onChange={(e) => setFormData({ ...formData, selectedBenefitType: e.target.value })}
+                                                onChange={(e) => {
+                                                    const value = e.target.value;
+                                                    setFormData({
+                                                        ...formData,
+                                                        benefitType: value,
+                                                        selectedBenefitType: value === 'Specify Benefit Types' ? formData.selectedBenefitType : ''
+                                                    });
+
+                                                }}
                                                 isInvalid={!!validationErrors.selectedBenefitType}
 
                                             >
