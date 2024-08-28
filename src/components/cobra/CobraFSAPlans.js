@@ -1,6 +1,6 @@
 import React from 'react';
 import CobraPlansComponent from './CobraPlansComponent';
-import config from '../config';
+import config from '../../config';
 
 
 function CobraFSAPlans({ cobraId }) {

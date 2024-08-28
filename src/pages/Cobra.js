@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import CobraMedicalPlans from './CobraMedicalPlans';
+import CobraMedicalPlans from '../components/cobra/CobraMedicalPlans';
 import CompanyLayout from '../layouts/CompanyLayout';
-import CobraGeneralInformation from './CobraGeneralInformation';
-import CobraDentalPlans from './CobraDentalPlans';
-import CobraEAPPlans from './CobraEAPPlans';
-import CobraVisionPlans from './CobraVisionPlans';
-import CobraHRAPlans from './CobraHRAPlans';
-import CobraFSAPlans from './CobraFSAPlans';
-import CobraInsurancePlans from './CobraInsurancePlans';
-import EnrollmentContacts from './EnrollmentContacts';
-import CobraOpenEnrollment from './CobraOpenEnrollment';
-import CobraEmployeeCensus from './CobraEmployeeCensus';
-import ProgressBar from '../layouts/ProgressBar';
+import CobraGeneralInformation from '../components/cobra/CobraGeneralInformation';
+import CobraDentalPlans from '../components/cobra/CobraDentalPlans';
+import CobraEAPPlans from '../components/cobra/CobraEAPPlans';
+import CobraVisionPlans from '../components/cobra/CobraVisionPlans';
+import CobraHRAPlans from '../components/cobra/CobraHRAPlans';
+import CobraFSAPlans from '../components/cobra/CobraFSAPlans';
+import CobraInsurancePlans from '../components/cobra/CobraInsurancePlans';
+import EnrollmentContacts from '../components/cobra/EnrollmentContacts';
+import CobraOpenEnrollment from '../components/cobra/CobraOpenEnrollment';
+import CobraEmployeeCensus from '../components/cobra/CobraEmployeeCensus';
+import ProgressBar from '../components/common/ProgressBar';
 
 
 
@@ -20,12 +20,8 @@ function Cobra() {
 
   const { cobraId } = useParams();
 
-
-
   return (
-
     <div>
-
       <CompanyLayout>
         <ProgressBar cobraId={cobraId}/>
         <div id="page-content-wrapper">
@@ -46,14 +42,8 @@ function Cobra() {
             </div>
           </div>
         </div>
-
       </CompanyLayout>
     </div>
-
-
-
-
-
   );
 }
 

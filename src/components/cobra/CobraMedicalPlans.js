@@ -1,14 +1,14 @@
 import React from 'react';
 import CobraPlansComponent from './CobraPlansComponent';
-import config from '../config';
+import config from '../../config';
 
 
-function CobraInsurancePlans({ cobraId }) {
-    const fetchUrl = `${config.API_URL}/CobraInsurancePlans/ByPlanId/${cobraId}`;
-    const updateUrl = `${config.API_URL}/CobraInsurancePlans`;
-    const deleteUrl = `${config.API_URL}/CobraInsurancePlans`;
-    const addUrl = `${config.API_URL}/CobraInsurancePlans`;
-    const planName = "Insurance"
+function CobraMedicalPlans({ cobraId }) {
+    const fetchUrl = `${config.API_URL}/COBRAMedicalPlans/ByPlanId/${cobraId}`;
+    const updateUrl = `${config.API_URL}/COBRAMedicalPlans`;
+    const deleteUrl = `${config.API_URL}/COBRAMedicalPlans`;
+    const addUrl = `${config.API_URL}/COBRAMedicalPlans`;
+    const planName = "Medical"
 
     const formFields = [
         { name: 'carrierName', type: 'select', title: 'Carrier Name', placeholder: 'Carrier Name'  },
@@ -89,4 +89,4 @@ function CobraInsurancePlans({ cobraId }) {
     );
 }
 
-export default CobraInsurancePlans;
+export default CobraMedicalPlans;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Dashboard from './dashboard/Dashboard';
-import Cobra from './cobra/Cobra';
+import Dashboard from './pages/Dashboard'
+import Cobra from './pages/Cobra';
 
 function App() {
   return (

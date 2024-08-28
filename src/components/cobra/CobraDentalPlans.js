@@ -1,14 +1,13 @@
 import React from 'react';
 import CobraPlansComponent from './CobraPlansComponent';
-import config from '../config';
+import config from '../../config';
 
-
-function CobraMedicalPlans({ cobraId }) {
-    const fetchUrl = `${config.API_URL}/COBRAMedicalPlans/ByPlanId/${cobraId}`;
-    const updateUrl = `${config.API_URL}/COBRAMedicalPlans`;
-    const deleteUrl = `${config.API_URL}/COBRAMedicalPlans`;
-    const addUrl = `${config.API_URL}/COBRAMedicalPlans`;
-    const planName = "Medical"
+function CobraDentalPlans({ cobraId }) {
+    const fetchUrl = `${config.API_URL}/COBRADentalPlans/ByPlanId/${cobraId}`;
+    const updateUrl = `${config.API_URL}/COBRADentalPlans`;
+    const deleteUrl = `${config.API_URL}/COBRADentalPlans`;
+    const addUrl = `${config.API_URL}/COBRADentalPlans`;
+    const planName = "Dental"
 
     const formFields = [
         { name: 'carrierName', type: 'select', title: 'Carrier Name', placeholder: 'Carrier Name'  },
@@ -50,26 +49,6 @@ function CobraMedicalPlans({ cobraId }) {
             { value: 'Composite', label: 'Composite' },
             { value: 'Age/Gender', label: 'Age/Gender' },
             { value: 'Member Specific', label: 'Member Specific' }
-        ],
-        coverageLevelName: [
-            { value: 'EE', label: 'EE' },
-            { value: 'EE+Child', label: 'EE+Child' },
-            { value: 'EE+Children', label: 'EE+Children' },
-            { value: 'EE+Child(ren)', label: 'EE+Child(ren)' },
-            { value: 'EE+Family', label: 'EE+Family' },
-            { value: 'EE+Spouse', label: 'EE+Spouse' },
-            { value: 'EE+Domestic Partner', label: 'EE+Domestic Partner' },
-            { value: 'Spouse+Child', label: 'Spouse+Child' },
-            { value: 'Spouse+Children', label: 'Spouse+Children' },
-            { value: 'Spouse+Child(ren)', label: 'Spouse+Child(ren)' },
-            { value: 'Child Only', label: 'Child Only' },
-            { value: 'Children Only', label: 'Children Only' },
-            { value: 'Child(ren) Only', label: 'Child(ren) Only' },
-            { value: 'Spouse Only', label: 'Spouse Only' },
-            { value: 'EE+1', label: 'EE+1' },
-            { value: 'EE+2', label: 'EE+2' },
-            { value: 'EE+3', label: 'EE+3' },
-            { value: 'EE+4', label: 'EE+4' }
         ]
     };
 
@@ -89,4 +68,4 @@ function CobraMedicalPlans({ cobraId }) {
     );
 }
 
-export default CobraMedicalPlans;
+export default CobraDentalPlans;

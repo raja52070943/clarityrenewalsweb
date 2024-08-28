@@ -1,10 +1,10 @@
 import React, {  useState, useEffect } from 'react';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
-import config from '../config';
+import config from '../../config';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import { alertconfirmation, terminationAlert, alertPlanMappingWarning } from '../alerts/Alerts';
+import { alertconfirmation, terminationAlert, alertPlanMappingWarning } from '../../alerts/Alerts';
 
 
 

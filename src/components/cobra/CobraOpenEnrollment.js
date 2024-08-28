@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
-import config from '../config';
+import config from '../../config';
 
 function CobraOpenEnrollment({ cobraId, onError = () => { }  }) {
     const fetchUrl = `${config.API_URL}/CobraOpenEnrollmentManagements/ByPlanId/${cobraId}`;

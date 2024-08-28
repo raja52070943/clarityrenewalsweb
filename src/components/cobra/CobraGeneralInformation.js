@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
-import config from '../config';
+import config from '../../config';
 import { Form, FormControl, Button, Col, Row, Alert } from 'react-bootstrap';
-import CustomSwitch from '../components/ui/CustomSwitch/CustomSwitch'; // Import the custom switch
+import CustomSwitch from '../ui/CustomSwitch/CustomSwitch'; // Import the custom switch
 
 function CobraGeneralInformation({ cobraId, onError = () => {}, onValidationStateChange = () => {} }) {
   const fetchUrl = `${config.API_URL}/CobraGeneralInformations/ByPlanId/${cobraId}`;

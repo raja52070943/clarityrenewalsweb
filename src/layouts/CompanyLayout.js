@@ -5,8 +5,8 @@ import 'bootstrap-select/dist/css/bootstrap-select.min.css';
 import '../assets/css/app.css';
 import '../assets/css/icons.min.css';
 import '../assets/css/style.css';
-import Sidebar from './Sidebar';
-import CompanyHeader from './CompanyHeader';
+import Sidebar from '../components/common/Sidebar';
+import CompanyHeader from '../components/common/CompanyHeader';
 
 const DashboardLayout = ({ children }) => {
   useEffect(() => {

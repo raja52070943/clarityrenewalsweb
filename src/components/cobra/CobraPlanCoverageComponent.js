@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
-import config from '../config';
+import config from '../../config';
 
 function CobraPlanCoverageComponent({ planId, planName, selectOptions, initialFormValues = {}, onError = () => {} }) {
   const fetchUrl = `${config.API_URL}/${planName}CoverageRates/ByCOBRA${planName}PlanId/${planId}`;

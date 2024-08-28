@@ -1,5 +1,5 @@
 import React from 'react';
-import ClarityLogo from '../assets/images/clarity-logo.png';
+import ClarityLogo from '../../assets/images/clarity-logo.png';
 
 function CompanyHeader() {
   return (
