@@ -115,13 +115,18 @@ function CobraGeneralInformation({ cobraId, onError = () => {}, onValidationStat
           <h5 className="card-title">General Information</h5>
 
           <Row className="mb-2 align-items-center">
-            <Col xs="auto">
+            <Col xs="auto" lg={12}>
               <Form.Label>
                 We are currently receiving new qualifying events and newly eligible participants via (Show Account - Funding & Files - QB/NPM File Source). Is this changing?
               </Form.Label>
             </Col>
             <Col xs="auto">
-              <CustomSwitch
+              {/* <CustomSwitch
+                checked={generalInfo?.isChange === 'true'}
+                onChange={handleToggleChange}
+              /> */}
+              <Form.Check
+                type="switch"
                 checked={generalInfo?.isChange === 'true'}
                 onChange={handleToggleChange}
               />
